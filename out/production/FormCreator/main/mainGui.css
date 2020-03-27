@@ -1,0 +1,12 @@
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-font-size: 11px;
+    -fx-alignment: center;
+}
+.table-view .cell{
+    -fx-font-size: 7.5px;
+}
+#lbVersion .label{
+    -fx-font-size: 5px;
+    -fx-alignment: center-left;
+}
