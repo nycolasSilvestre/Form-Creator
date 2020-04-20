@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -28,9 +30,14 @@
                      <children>
                         <HBox prefHeight="34.0" prefWidth="742.0" spacing="10.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Label prefHeight="24.0" prefWidth="94.0" text="Path ou Url:" HBox.hgrow="ALWAYS" />
+                              <Label prefHeight="24.0" prefWidth="94.0" text="Path / Url:" HBox.hgrow="ALWAYS" />
                               <TextField fx:id="txtFilePath" prefHeight="26.0" prefWidth="556.0" promptText="Entre com o endereço do ficheiro" HBox.hgrow="ALWAYS" />
-                              <Button fx:id="btnImportFile" mnemonicParsing="false" prefHeight="26.0" prefWidth="158.0" text="Importar Ficheiro" HBox.hgrow="ALWAYS" />
+                              <MenuButton contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="Impotar Ficheiro">
+                                 <items>
+                                    <MenuItem fx:id="btnMenuArqLocal" mnemonicParsing="false" onAction="#importLocalFile" text="Arquivo Local" />
+                                    <MenuItem fx:id="btnMenuUrl" disable="true" mnemonicParsing="false" onAction="#importUrlFile" text="URL" />
+                                 </items>
+                              </MenuButton>
                            </children>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -41,13 +48,13 @@
                         </HBox>
                         <TableView fx:id="tbForms" prefHeight="586.0" prefWidth="829.0" stylesheets="@mainGui.css" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn prefWidth="176.79997903108597" text="NOME DO CAMPO" />
-                            <TableColumn minWidth="7.199981689453125" prefWidth="89.59999084472656" text="TIPO" />
-                            <TableColumn prefWidth="120.0" text="LOCALIZAÇÃO" />
-                            <TableColumn minWidth="7.199981689453125" prefWidth="121.60000610351562" text="DESCRIÇÃO" />
-                            <TableColumn minWidth="7.199981689453125" prefWidth="111.199951171875" text="OPÇÕES" />
-                            <TableColumn minWidth="0.0" prefWidth="106.4000244140625" text="VALOR" />
-                            <TableColumn minWidth="7.199981689453125" prefWidth="104.800048828125" text="VALOR PADRÃO" />
+                            <TableColumn fx:id="colFieldName" prefWidth="176.79997903108597" text="NOME DO CAMPO" />
+                            <TableColumn fx:id="colFieldType" minWidth="7.199981689453125" prefWidth="89.59999084472656" text="TIPO" />
+                            <TableColumn fx:id="colFieldLocation" prefWidth="120.0" text="LOCALIZAÇÃO" />
+                            <TableColumn fx:id="colFieldDesc" minWidth="7.199981689453125" prefWidth="121.60000610351562" text="DESCRIÇÃO" />
+                            <TableColumn fx:id="colFieldOptions" minWidth="7.199981689453125" prefWidth="111.199951171875" text="OPÇÕES" />
+                            <TableColumn fx:id="colFieldValue" minWidth="0.0" prefWidth="106.4000244140625" text="VALOR" />
+                            <TableColumn fx:id="colFieldDefaultValue" minWidth="7.199981689453125" prefWidth="104.800048828125" text="VALOR PADRÃO" />
                           </columns>
                            <VBox.margin>
                               <Insets />
@@ -62,12 +69,81 @@
                </opaqueInsets></AnchorPane>
       </content>
     </Tab>
-    <Tab text="Configuração de dados">
+    <Tab fx:id="tbConfDados" closable="false" disable="true" text="Configuração de dados">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <VBox layoutX="6.0" layoutY="5.0" prefHeight="714.0" prefWidth="838.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="5.0">
+                     <children>
+                        <HBox prefHeight="57.0" prefWidth="829.0" spacing="20.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <children>
+                              <MenuButton contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="Importar Dados">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="CSV" />
+                                  <MenuItem mnemonicParsing="false" text="FPDF" />
+                                  <MenuItem mnemonicParsing="false" text="XFDF" />
+                                  <MenuItem mnemonicParsing="false" text="XML" />
+                                  <MenuItem mnemonicParsing="false" text="BASE DE DADOS" />
+                                </items>
+                              </MenuButton>
+                              <TextField fx:id="txtDataFilePath" prefHeight="26.0" prefWidth="556.0" promptText="Entre com o endereço do ficheiro" />
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </HBox>
+                        <VBox prefHeight="582.0" prefWidth="819.0">
+                           <children>
+                              <HBox prefHeight="50.0" prefWidth="768.0" spacing="550.0">
+                                 <children>
+                                    <Label prefHeight="18.0" prefWidth="102.0" text="Dados a importar" />
+                                    <Label prefHeight="18.0" prefWidth="112.0" text="Campos Disponíveis" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="534.0" prefWidth="799.0" spacing="15.0">
+                                 <children>
+                                    <TableView prefHeight="504.0" prefWidth="778.0" HBox.hgrow="ALWAYS">
+                                      <columns>
+                                        <TableColumn prefWidth="396.8000034093857" resizable="false" text="Nome campo (Entrada)" />
+                                          <TableColumn prefWidth="377.6000671386719" resizable="false" text="Nome Campo (Destino)" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                        <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#confirm" prefHeight="26.0" prefWidth="119.0" text="Confirmar">
+                           <VBox.margin>
+                              <Insets left="680.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="1.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="1.0" left="5.0" right="5.0" top="5.0" />
+               </padding></AnchorPane>
       </content>
     </Tab>
-      <Tab text="Configuração de Saída">
+      <Tab fx:id="tbOutConfig" closable="false" disable="true" text="Configuração de Saída">
           <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
