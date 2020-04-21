@@ -17,6 +17,8 @@
         <element id="directory" name="META-INF">
           <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
         </element>
+        <element id="library" level="project" name="org.apache.pdfbox:fontbox:2.0.19" />
+        <element id="library" level="project" name="org.apache.pdfbox:pdfbox:2.0.19" />
       </element>
     </root>
   </artifact>

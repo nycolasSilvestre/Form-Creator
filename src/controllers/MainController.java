@@ -33,7 +33,7 @@ public class MainController {
     @FXML
     TableView<PDField> tbForms;
     @FXML
-    TableColumn<PDField, String> colFieldName,colFieldType,colFieldLocation,colFieldDesc,colFieldOptions,colFieldValue,
+    TableColumn<PDField, String> colFieldName,colFieldType,colFieldDesc,colFieldOptions,colFieldValue,
             colFieldDefaultValue;
     private PDDocument pdDocument;
 
@@ -41,8 +41,7 @@ public class MainController {
     public void initialize(){
         lbVersion.setText("Version: "+version);
         colFieldName.setCellValueFactory(new PropertyValueFactory<PDField,String>("FullyQualifiedName"));
-        colFieldType.setCellValueFactory(new PropertyValueFactory<PDField,String>("FullyQualifiedName"));
-        colFieldLocation.setCellValueFactory(new PropertyValueFactory<PDField,String>("FullyQualifiedName"));
+        colFieldType.setCellValueFactory(new PropertyValueFactory<PDField,String>("FieldType"));
         colFieldDesc.setCellValueFactory(new PropertyValueFactory<PDField,String>("FullyQualifiedName"));
         colFieldOptions.setCellValueFactory(new PropertyValueFactory<PDField,String>("FullyQualifiedName"));
         colFieldValue.setCellValueFactory(new PropertyValueFactory<PDField,String>("FullyQualifiedName"));
@@ -81,11 +80,11 @@ public class MainController {
         ObservableList<PDField> fields = FXCollections.observableArrayList();
         Iterator<PDField> temp = pdDocument.getDocumentCatalog().getAcroForm().getFieldIterator();
         while (temp.hasNext()){
-            fields.add(temp.next());
+            PDField tempField = temp.next();
+            if(tempField.getFieldType()!=null){
+                fields.add(tempField);
+            }
         }
         return fields;
     }
-
-
-
 }

@@ -48,13 +48,12 @@
                         </HBox>
                         <TableView fx:id="tbForms" prefHeight="586.0" prefWidth="829.0" stylesheets="@mainGui.css" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn fx:id="colFieldName" prefWidth="176.79997903108597" text="NOME DO CAMPO" />
-                            <TableColumn fx:id="colFieldType" minWidth="7.199981689453125" prefWidth="89.59999084472656" text="TIPO" />
-                            <TableColumn fx:id="colFieldLocation" prefWidth="120.0" text="LOCALIZAÇÃO" />
-                            <TableColumn fx:id="colFieldDesc" minWidth="7.199981689453125" prefWidth="121.60000610351562" text="DESCRIÇÃO" />
-                            <TableColumn fx:id="colFieldOptions" minWidth="7.199981689453125" prefWidth="111.199951171875" text="OPÇÕES" />
-                            <TableColumn fx:id="colFieldValue" minWidth="0.0" prefWidth="106.4000244140625" text="VALOR" />
-                            <TableColumn fx:id="colFieldDefaultValue" minWidth="7.199981689453125" prefWidth="104.800048828125" text="VALOR PADRÃO" />
+                            <TableColumn fx:id="colFieldName" prefWidth="219.99999123811722" text="NOME DO CAMPO" />
+                            <TableColumn fx:id="colFieldType" minWidth="7.199981689453125" prefWidth="96.80000305175781" text="TIPO" />
+                            <TableColumn fx:id="colFieldDesc" minWidth="7.199981689453125" prefWidth="118.40008544921875" text="DESCRIÇÃO" />
+                            <TableColumn fx:id="colFieldOptions" minWidth="7.199981689453125" prefWidth="101.60006713867188" text="OPÇÕES" />
+                            <TableColumn fx:id="colFieldValue" minWidth="0.0" prefWidth="132.80001831054688" text="VALOR" />
+                            <TableColumn fx:id="colFieldDefaultValue" minWidth="7.199981689453125" prefWidth="158.39996337890625" text="VALOR PADRÃO" />
                           </columns>
                            <VBox.margin>
                               <Insets />

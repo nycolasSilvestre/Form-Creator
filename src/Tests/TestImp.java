@@ -20,13 +20,19 @@ public class TestImp {
             PDDocument pDDocument = PDDocument.load(new File("C:\\Users\\Nycolas Silvestre\\Downloads\\PJ_1_DGSS.pdf"));
             PDAcroForm pDAcroForm = pDDocument.getDocumentCatalog().getAcroForm();
             Iterator<PDField> fields = pDAcroForm.getFieldIterator();
-            fields.forEachRemaining(f-> System.out.printf("Nome do campo %s, tipo %s%n",f.getFullyQualifiedName(),f.getFieldType()));
+//            fields.forEachRemaining(f-> System.out.printf("Nome do campo %s, tipo %s%n",f.getFullyQualifiedName(),f.getFieldType()));
+//            fields.forEachRemaining(f-> System.out.printf("PartialName %s, Tostring %s%n",f.getPartialName(),f.toString()));
+            while (fields.hasNext()){
+                PDField temp = fields.next();
+                if(temp.getFieldType()!=null){
+                    System.out.println(temp.getFullyQualifiedName());
+                }
+            }
+          //  PDField field = pDAcroForm.getField("topmostSubform[0].Page1[0].Distrito[0]");
+            //PDChoice choice = (PDChoice) pDAcroForm.getField("topmostSubform[0].Page1[0].Distrito[0]");
 
-            PDField field = pDAcroForm.getField("topmostSubform[0].Page1[0].Distrito[0]");
-            PDChoice choice = (PDChoice) pDAcroForm.getField("topmostSubform[0].Page1[0].Distrito[0]");
 
-
-            System.out.println(choice.getValueAsString());
+           // System.out.println(choice.getValueAsString());
             pDDocument.save("C:\\Users\\Nycolas Silvestre\\Downloads\\PJ_1_DGSS.pdf");
             pDDocument.close();
         } catch (IOException e) {
