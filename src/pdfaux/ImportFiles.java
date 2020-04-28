@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ImportFiles {
+    // incluir validação de formato
    public static PDDocument importPDF(File pdfFile){
        PDDocument pdDocument = null;
        try {

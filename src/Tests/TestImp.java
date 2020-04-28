@@ -17,23 +17,27 @@ import java.util.stream.Stream;
 public class TestImp {
    public static void main(String[] args) {
         try {
-            PDDocument pDDocument = PDDocument.load(new File("C:\\Users\\Nycolas Silvestre\\Downloads\\PJ_1_DGSS.pdf"));
+            PDDocument pDDocument = PDDocument.load(new File("D:\\AlunoTest2009s.pdf"));
             PDAcroForm pDAcroForm = pDDocument.getDocumentCatalog().getAcroForm();
             Iterator<PDField> fields = pDAcroForm.getFieldIterator();
 //            fields.forEachRemaining(f-> System.out.printf("Nome do campo %s, tipo %s%n",f.getFullyQualifiedName(),f.getFieldType()));
 //            fields.forEachRemaining(f-> System.out.printf("PartialName %s, Tostring %s%n",f.getPartialName(),f.toString()));
             while (fields.hasNext()){
                 PDField temp = fields.next();
-                if(temp.getFieldType()!=null){
-                    System.out.println(temp.getFullyQualifiedName());
+                //System.out.println(temp.getAlternateFieldName();
+                if(temp.getFieldType()=="Ch"){
+                    PDChoice choice = (PDChoice)  temp;
+                    choice.setValue("Eng. s");
+//                    choice.setDefaultValue();
+//                    System.out.println(choice.setValue(););
                 }
             }
-          //  PDField field = pDAcroForm.getField("topmostSubform[0].Page1[0].Distrito[0]");
-            //PDChoice choice = (PDChoice) pDAcroForm.getField("topmostSubform[0].Page1[0].Distrito[0]");
+          //  PDChoice field =(PDChoice) pDAcroForm.getField("topmostSubform[0].Page1[0].Distrito[0]");
+//            PDChoice choice = (PDChoice) pDAcroForm.getField("topmostSubform[0].Page1[0].Distrito[0]");
 
 
-           // System.out.println(choice.getValueAsString());
-            pDDocument.save("C:\\Users\\Nycolas Silvestre\\Downloads\\PJ_1_DGSS.pdf");
+//           System.out.println(field.getOptionsDisplayValues().toString());
+            pDDocument.save("D:\\AlunoTest2009s.pdf");
             pDDocument.close();
         } catch (IOException e) {
             e.printStackTrace();

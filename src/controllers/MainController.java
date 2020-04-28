@@ -42,10 +42,10 @@ public class MainController {
         lbVersion.setText("Version: "+version);
         colFieldName.setCellValueFactory(new PropertyValueFactory<PDField,String>("FullyQualifiedName"));
         colFieldType.setCellValueFactory(new PropertyValueFactory<PDField,String>("FieldType"));
-        colFieldDesc.setCellValueFactory(new PropertyValueFactory<PDField,String>("FullyQualifiedName"));
-        colFieldOptions.setCellValueFactory(new PropertyValueFactory<PDField,String>("FullyQualifiedName"));
-        colFieldValue.setCellValueFactory(new PropertyValueFactory<PDField,String>("FullyQualifiedName"));
-        colFieldDefaultValue.setCellValueFactory(new PropertyValueFactory<PDField,String>("FullyQualifiedName"));
+        colFieldDesc.setCellValueFactory(new PropertyValueFactory<PDField,String>("AlternateFieldName"));
+        colFieldOptions.setCellValueFactory(new PropertyValueFactory<PDField,String>("AlternateFieldName"));
+        colFieldValue.setCellValueFactory(new PropertyValueFactory<PDField,String>("Value"));
+        colFieldDefaultValue.setCellValueFactory(new PropertyValueFactory<PDField,String>("DefaultValue"));
 
     }
     public void importUrlFile(){
