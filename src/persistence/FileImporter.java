@@ -13,6 +13,7 @@ public class FileImporter {
     private File file = null;
     private String importedFilePath;
     private FileType fileType;
+    private PDDocument pdDocument = null;
 
     public FileImporter(FileType fileType) {
         this.fileType = fileType;
@@ -20,9 +21,7 @@ public class FileImporter {
 
     public PDDocument importFile(){
         pickFile(FileType.PDF);
-        PDDocument pdDocument = null;
         if(file != null){
-            importedFilePath = file.getPath();
             try{
                 pdDocument = PDDocument.load(file);
             }
@@ -34,6 +33,7 @@ public class FileImporter {
     }
 
     public void pickFile(FileType type) {
+        File tempFile;
         FileChooser.ExtensionFilter fileFilter;
         switch (type){
             case PDF:
@@ -56,7 +56,15 @@ public class FileImporter {
         }
         if(fileFilter != null)
             fileChooser.getExtensionFilters().add(fileFilter);
-        file = fileChooser.showOpenDialog(new Stage());
+        tempFile = fileChooser.showOpenDialog(new Stage());
+        if(tempFile == null){
+            System.out.println("Null file");
+        }
+        else{
+            file = tempFile;
+            importedFilePath= file.getPath();
+        }
+
     }
 
 

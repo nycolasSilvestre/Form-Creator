@@ -10,8 +10,10 @@ import javafx.stage.Stage;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationWidget;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+import pdfaux.ObservablePdfFields;
 import persistence.FileImporter;
 import persistence.FileType;
+import persistence.PDFieldToObservable;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,22 +36,21 @@ public class MainController {
     Button btnConfirm;
 
     @FXML
-    TableView<PDField> tbForms;
+    TableView<ObservablePdfFields> tbForms;
     @FXML
-    TableColumn<PDField, String> colFieldName,colFieldType,colFieldDesc,colFieldOptions,colFieldValue,
+    TableColumn<ObservablePdfFields, String> colFieldName,colFieldType,colFieldDesc,colFieldOptions,colFieldValue,
             colFieldDefaultValue;
     private PDDocument pdDocument;
 
     @FXML
     public void initialize(){
         lbVersion.setText("Version: "+version);
-        colFieldName.setCellValueFactory(new PropertyValueFactory<PDField,String>("FullyQualifiedName"));
-        colFieldType.setCellValueFactory(new PropertyValueFactory<PDField,String>("FieldType"));
-        colFieldDesc.setCellValueFactory(new PropertyValueFactory<PDField,String>("AlternateFieldName"));
-        colFieldOptions.setCellValueFactory(new PropertyValueFactory<PDField,String>("AlternateFieldName"));
-        colFieldValue.setCellValueFactory(new PropertyValueFactory<PDField,String>("Value"));
-        colFieldDefaultValue.setCellValueFactory(new PropertyValueFactory<PDField,String>("DefaultValue"));
-
+        colFieldName.setCellValueFactory(new PropertyValueFactory<ObservablePdfFields,String>("name"));
+        colFieldType.setCellValueFactory(new PropertyValueFactory<ObservablePdfFields,String>("type"));
+        colFieldDesc.setCellValueFactory(new PropertyValueFactory<ObservablePdfFields,String>("description"));
+        colFieldOptions.setCellValueFactory(new PropertyValueFactory<ObservablePdfFields,String>("optionsStr"));
+        colFieldValue.setCellValueFactory(new PropertyValueFactory<ObservablePdfFields,String>("value"));
+        colFieldDefaultValue.setCellValueFactory(new PropertyValueFactory<ObservablePdfFields,String>("defaultValue"));
     }
     public void importUrlFile(){
         //Implementar download de ficheiro
@@ -57,24 +58,26 @@ public class MainController {
     }
     public void importLocalPDFFile(){
         FileImporter fileImporter = new FileImporter(FileType.FDF);
-        txtFilePath.setText(fileImporter.getImportedFilePath());
         pdDocument = fileImporter.importFile();
-        tbForms.setItems(getFields());
-        if(pdDocument != null)
-            tabConfDados.setDisable(false);
+        if(fileImporter.getImportedFilePath()!="" && fileImporter.getImportedFilePath() != null) {
+            if (pdDocument != null)
+                tbForms.setItems(getFields());
+                tabConfDados.setDisable(false);
+                txtFilePath.setText(fileImporter.getImportedFilePath());
+        }
     }
     public void confirm(){
 
         tabOutConfig.setDisable(false);
     }
 
-    public ObservableList<PDField> getFields(){
-        ObservableList<PDField> fields = FXCollections.observableArrayList();
+    public ObservableList<ObservablePdfFields> getFields(){
+        ObservableList<ObservablePdfFields> fields = FXCollections.observableArrayList();
         Iterator<PDField> temp = pdDocument.getDocumentCatalog().getAcroForm().getFieldIterator();
         while (temp.hasNext()){
             PDField tempField = temp.next();
             if(tempField.getFieldType()!=null){
-                fields.add(tempField);
+                fields.add(PDFieldToObservable.pdfieldToObsPdfField(tempField));
             }
         }
         return fields;
