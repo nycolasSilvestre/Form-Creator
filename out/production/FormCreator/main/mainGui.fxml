@@ -16,7 +16,7 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="850.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
   <tabs>
-    <Tab text="Importar Ficheiro">
+    <Tab fx:id="tabImportFiles" text="Importar Ficheiro">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <padding>
@@ -34,7 +34,7 @@
                               <TextField fx:id="txtFilePath" prefHeight="26.0" prefWidth="556.0" promptText="Entre com o endereço do ficheiro" HBox.hgrow="ALWAYS" />
                               <MenuButton contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="Impotar Ficheiro">
                                  <items>
-                                    <MenuItem fx:id="btnMenuArqLocal" mnemonicParsing="false" onAction="#importLocalFile" text="Arquivo Local" />
+                                    <MenuItem fx:id="btnMenuArqLocal" mnemonicParsing="false" onAction="#importLocalPDFFile" text="Arquivo Local" />
                                     <MenuItem fx:id="btnMenuUrl" disable="true" mnemonicParsing="false" onAction="#importUrlFile" text="URL" />
                                  </items>
                               </MenuButton>
@@ -68,7 +68,7 @@
                </opaqueInsets></AnchorPane>
       </content>
     </Tab>
-    <Tab fx:id="tbConfDados" closable="false" disable="true" text="Configuração de dados">
+    <Tab fx:id="tabConfDados" closable="false" disable="true" text="Configuração de dados">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -142,7 +142,7 @@
                </padding></AnchorPane>
       </content>
     </Tab>
-      <Tab fx:id="tbOutConfig" closable="false" disable="true" text="Configuração de Saída">
+      <Tab fx:id="tabOutConfig" closable="false" disable="true" text="Configuração de Saída">
           <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>

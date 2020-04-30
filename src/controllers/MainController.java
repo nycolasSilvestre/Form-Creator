@@ -8,10 +8,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationWidget;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
-import pdfaux.ImportFiles;
+import persistence.FileImporter;
+import persistence.FileType;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 
 public class MainController {
@@ -20,15 +25,13 @@ public class MainController {
     Label lbVersion;
 
     @FXML
-    Tab tbConfDados,tbOutConfig;
+    Tab tabImportFiles,tabConfDados,tabOutConfig;
     
     @FXML
     TextField txtFilePath;
 
     @FXML
     Button btnConfirm;
-
-    FileChooser fileChooser = new FileChooser();
 
     @FXML
     TableView<PDField> tbForms;
@@ -52,28 +55,17 @@ public class MainController {
         //Implementar download de ficheiro
         System.out.println("Importing URL file...");
     }
-    public void importLocalFile(){
-        File file = fileChooser.showOpenDialog(new Stage());
-        if (file != null) {
-            txtFilePath.setText(file.getPath());
-            try {
-                pdDocument = ImportFiles.importPDF(file);
-                tbForms.setItems(getFields());
-            }
-            catch (Exception ex){
-                ex.printStackTrace();
-            }
-
-        }
-        if(isFileImported()){
-            tbConfDados.setDisable(false);
-        }
-    }
-    public boolean isFileImported(){
-        return txtFilePath.getText().length()!=0;
+    public void importLocalPDFFile(){
+        FileImporter fileImporter = new FileImporter(FileType.FDF);
+        txtFilePath.setText(fileImporter.getImportedFilePath());
+        pdDocument = fileImporter.importFile();
+        tbForms.setItems(getFields());
+        if(pdDocument != null)
+            tabConfDados.setDisable(false);
     }
     public void confirm(){
-        tbOutConfig.setDisable(false);
+
+        tabOutConfig.setDisable(false);
     }
 
     public ObservableList<PDField> getFields(){
