@@ -1,0 +1,10 @@
+Main.class
+pdfaux\PDFieldToObservable.class
+controllers\MainController.class
+Teste.class
+pdfaux\FileImporter.class
+pdfaux\MessageBox.class
+pdfaux\FileImporter$1.class
+pdfaux\FieldCollector.class
+pdfaux\FileType.class
+pdfaux\ObservablePdfFields.class
