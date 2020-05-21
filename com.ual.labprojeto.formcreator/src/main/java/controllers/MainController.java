@@ -85,6 +85,7 @@ public class MainController {
         pdDocument.getDocumentCatalog().getAcroForm()
                 .importFDF(FDFDocument.load(fileImporter.importFDF()));
         refreshTable();
+
     }
 // old
 //    public void fillFileds() throws IOException {
