@@ -1,7 +1,4 @@
-import pdfaux.MessageBox;
-
 import java.io.*;
-import java.util.Scanner;
 
 public class csv {
     private String fileName="D:\\Book1.csv";

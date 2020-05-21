@@ -68,7 +68,7 @@
                               <MenuButton contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="Importar Dados">
                                  <items>
                                     <MenuItem fx:id="btnImportCSV" mnemonicParsing="false" onAction="#importCSV" text="CSV" />
-                                    <MenuItem fx:id="btnImportFPDF" mnemonicParsing="false" onAction="#importFPDF" text="FPDF" />
+                                    <MenuItem fx:id="btnImportFPDF" mnemonicParsing="false" onAction="#importFDF" text="FPDF" />
                                     <MenuItem fx:id="btnImportXFDF" mnemonicParsing="false" onAction="#importXFDF" text="XFDF" />
                                     <MenuItem fx:id="btnImportXML" mnemonicParsing="false" onAction="#importXML" text="XML" />
                                     <MenuItem disable="true" mnemonicParsing="false" text="BASE DE DADOS" />
