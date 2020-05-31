@@ -69,6 +69,14 @@ public class ObservablePdfFields {
         return optionsStr;
     }
 
+    public List<String> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<String> options) {
+        this.options = options;
+    }
+
     @Override
     public String toString() {
         return "Field name: "+name+" type: "+type+" value: "+value;

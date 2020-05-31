@@ -15,6 +15,7 @@ import javafx.stage.Window;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.fdf.FDFDocument;
 import PDFUtil.*;
+import org.apache.pdfbox.pdmodel.interactive.form.PDComboBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import util.FileImporter;
 import util.FileSaver;
@@ -114,23 +115,42 @@ public class MainController {
             row.setOnMouseClicked(event ->{
                 if(!row.isEmpty() && event.getButton()== MouseButton.PRIMARY && event.getClickCount()==2){
                     ObservablePdfFields temp = row.getItem();
-                    try {
-                        getFormNewValue(temp);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if(temp.getType()=="ComboBox"){
+                        try {
+                            upadateComboBoxFormValue(temp);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                        else{
+                        try {
+                            upadateTextFormValue(temp);
+                        } catch (IOException e) {}
                     }
                 }
             });
             return row;
         });
     }
-    public void getFormNewValue(ObservablePdfFields field) throws IOException {
+    public void upadateTextFormValue(ObservablePdfFields field) throws IOException {
         TextInputDialog dialog = new TextInputDialog(field.getValue());
         dialog.setTitle("Editar Campo");
         dialog.setHeaderText("Editar valor do campo "+field.getName());
         dialog.setContentText("Por favor, inserir novo valor:");
         Optional<String> result = dialog.showAndWait();
         PDField temp = pdDocument.getDocumentCatalog().getAcroForm().getField(field.getName());
+        if(!result.toString().isEmpty())
+            temp.setValue(result.get());
+        refreshTable();
+    }
+    public void upadateComboBoxFormValue(ObservablePdfFields field) throws IOException {
+        List<String> options = field.getOptions();
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(field.getValue(),options);
+        dialog.setTitle("Editar Campo");
+        dialog.setHeaderText("Editar valor do campo "+field.getName());
+        dialog.setContentText("Por favor, escolher novo valor:");
+        Optional<String> result = dialog.showAndWait();
+        PDComboBox temp = (PDComboBox) pdDocument.getDocumentCatalog().getAcroForm().getField(field.getName());
         if(!result.toString().isEmpty())
             temp.setValue(result.get());
         refreshTable();
