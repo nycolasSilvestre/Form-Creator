@@ -1,5 +1,6 @@
-package PDFUtil;
+package util;
 
+import PDFUtil.FileType;
 import datafileshandler.CsvDataHandler;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
