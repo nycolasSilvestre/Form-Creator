@@ -103,7 +103,7 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                            <children>
-                              <Button fx:id="btnSaveAsPDF" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Salvar como PDF">
+                              <Button fx:id="btnSaveAsPDF" mnemonicParsing="false" onAction="#savePDF" prefHeight="30.0" prefWidth="120.0" text="Salvar como PDF">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin>

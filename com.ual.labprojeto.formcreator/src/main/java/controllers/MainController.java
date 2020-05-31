@@ -17,10 +17,13 @@ import org.apache.pdfbox.pdmodel.fdf.FDFDocument;
 import PDFUtil.*;
 import org.apache.pdfbox.pdmodel.interactive.form.PDComboBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+import org.apache.pdfbox.tools.ImportXFDF;
 import util.FileImporter;
 import util.FileSaver;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +56,6 @@ public class MainController {
     private PDDocument pdDocument;
     private MessageBox msgBox = new MessageBox();
     private FieldCollector fieldCollector = new FieldCollector();
-    private FieldEditor fieldEditor = new FieldEditor();
     @FXML
     public void initialize(){
 
@@ -89,19 +91,14 @@ public class MainController {
         FileImporter fileImporter = new FileImporter(FileType.CSV);
     }
 
-    public void importXFDF(){
-        Window stage  = tabPane.getScene().getWindow();
-        FileChooser f = new FileChooser();
-        f.showSaveDialog(stage);
-    }
+    public void importXFDF() throws IOException {}
     public void importXML() throws IOException {}
 
     public void importFDF(ActionEvent actionEvent) throws IOException {
         FileImporter fileImporter = new FileImporter(FileType.FDF);
         pdDocument.getDocumentCatalog().getAcroForm()
-                .importFDF(FDFDocument.load(fileImporter.importFDF()));
+                .importFDF(FDFDocument.load(fileImporter.importFile()));
         refreshTable();
-
     }
 
     public void refreshTable(){
@@ -173,5 +170,19 @@ public class MainController {
 //        }
 //        pdDocument.close();
 //    }
+    public void savePDF(){
+        Window stage  = tabPane.getScene().getWindow();
+        FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("PDF files (*.PDF)", "*.pdf");
+        FileChooser f = new FileChooser();
+        f.getExtensionFilters().add(fileFilter);
+        f.setTitle("Salvar Ficheiro");
 
+        File save = f.showSaveDialog(stage);
+        if (save != null) {
+            try {
+                pdDocument.save(save.getPath());
+            } catch (IOException ex) {
+            }
+        }
+    }
 }

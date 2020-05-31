@@ -71,7 +71,7 @@ public class FileImporter {
         }
         return pdDocument;
     }
-    public File importFDF(){
+    public File importFile(){
         pickFile();
        return file;
     }
