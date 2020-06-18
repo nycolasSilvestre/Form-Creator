@@ -1,29 +1,22 @@
 package controllers;
 
+import datafileshandler.CsvDataHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.fdf.FDFDocument;
 import PDFUtil.*;
 import org.apache.pdfbox.pdmodel.interactive.form.PDComboBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
-import org.apache.pdfbox.tools.ImportXFDF;
 import util.FileImporter;
-import util.FileSaver;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,8 +35,8 @@ public class MainController {
     @FXML
     TextField txtFilePath;
 
-    @FXML
-    Button btnSaveAsPDF,btnExportFDF,btnExportXFDF,btnExportCSV,btnExportJSON;
+//    @FXML
+//    Button btnSaveAsPDF,btnExportFDF,btnExportXFDF,btnExportCSV,btnExportJSON;
 
     @FXML
     TableView<ObservablePdfFields> tbForms;
@@ -56,6 +49,7 @@ public class MainController {
     private PDDocument pdDocument;
     private MessageBox msgBox = new MessageBox();
     private FieldCollector fieldCollector = new FieldCollector();
+    private FormFieldHandler formFieldHandler = new FormFieldHandler();
     @FXML
     public void initialize(){
 
@@ -72,6 +66,7 @@ public class MainController {
         FileImporter fileImporter = new FileImporter(FileType.PDF);
         pdDocument = fileImporter.importPDFFile();
         if(fileImporter.getImportedFilePath()!="" && fileImporter.getImportedFilePath() != null) {
+            txtFilePath.setText(fileImporter.getImportedFilePath());
             refreshTable();
         }
     }
@@ -100,6 +95,12 @@ public class MainController {
                 .importFDF(FDFDocument.load(fileImporter.importFile()));
         refreshTable();
     }
+    public void importCSV(ActionEvent actionEvent) throws IOException {
+        FileImporter fileImporter = new FileImporter(FileType.CSV);
+        CsvDataHandler csvDataHandler = new CsvDataHandler(fileImporter.importFile());
+        csvDataHandler.importCsvData(pdDocument);
+        refreshTable();
+    }
 
     public void refreshTable(){
         if (pdDocument != null && fieldCollector.getFields(pdDocument) !=null) {
@@ -114,14 +115,14 @@ public class MainController {
                     ObservablePdfFields temp = row.getItem();
                     if(temp.getType()=="ComboBox"){
                         try {
-                            upadateComboBoxFormValue(temp);
+                            updateComboBoxFormValue(temp);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
                         else{
                         try {
-                            upadateTextFormValue(temp);
+                            updateTextFormValue(temp);
                         } catch (IOException e) {}
                     }
                 }
@@ -129,48 +130,46 @@ public class MainController {
             return row;
         });
     }
-    public void upadateTextFormValue(ObservablePdfFields field) throws IOException {
+    public void updateTextFormValue(ObservablePdfFields field) throws IOException {
         TextInputDialog dialog = new TextInputDialog(field.getValue());
         dialog.setTitle("Editar Campo");
         dialog.setHeaderText("Editar valor do campo "+field.getName());
         dialog.setContentText("Por favor, inserir novo valor:");
         Optional<String> result = dialog.showAndWait();
-        PDField temp = pdDocument.getDocumentCatalog().getAcroForm().getField(field.getName());
-        if(!result.toString().isEmpty())
-            temp.setValue(result.get());
+        formFieldHandler.updateTextField(pdDocument,field.getName(),result.get());
         refreshTable();
     }
-    public void upadateComboBoxFormValue(ObservablePdfFields field) throws IOException {
+    public void updateComboBoxFormValue(ObservablePdfFields field) throws IOException {
         List<String> options = field.getOptions();
         ChoiceDialog<String> dialog = new ChoiceDialog<>(field.getValue(),options);
         dialog.setTitle("Editar Campo");
         dialog.setHeaderText("Editar valor do campo "+field.getName());
         dialog.setContentText("Por favor, escolher novo valor:");
         Optional<String> result = dialog.showAndWait();
-        PDComboBox temp = (PDComboBox) pdDocument.getDocumentCatalog().getAcroForm().getField(field.getName());
-        if(!result.toString().isEmpty())
-            temp.setValue(result.get());
+        formFieldHandler.updateComboBoxField(pdDocument,field.getName(),result.get());
         refreshTable();
 
     }
+    public void exportFDF(){}
+    public void exportXFDF(){}
+    public void exportJSON(){}
 
-// old
-//    public void fillFileds() throws IOException {
-//        PDAcroForm pdAcroForm= pdDocument.getDocumentCatalog().getAcroForm();
-//        PDField field = null;
-//        HashMap<String,String> test = new HashMap<>();
-//        test.put("tbNome","Ederson");
-//        test.put("tbAno","Birigui");
-//        test.put("tbCurso","Eng.da Pesca");
-//        test.put("tbAno","2020");
-//        for ( String s: test.keySet()) {
-//            field = pdAcroForm.getField(s);
-//            field.setValue(test.get(s));
-//            pdDocument.save("D:\\preenchimentoLista.pdf");
-//        }
-//        pdDocument.close();
-//    }
     public void savePDF(){
+        Window stage  = tabPane.getScene().getWindow();
+        FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("PDF files (*.PDF)", "*.pdf");
+        FileChooser f = new FileChooser();
+        f.getExtensionFilters().add(fileFilter);
+        f.setTitle("Salvar Ficheiro");
+
+        File save = f.showSaveDialog(stage);
+        if (save != null) {
+            try {
+                pdDocument.save(save.getPath());
+            } catch (IOException ex) {
+            }
+        }
+    }
+    public void exportCsv(){
         Window stage  = tabPane.getScene().getWindow();
         FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("PDF files (*.PDF)", "*.pdf");
         FileChooser f = new FileChooser();

@@ -75,18 +75,6 @@ public class FileImporter {
         pickFile();
        return file;
     }
-    //Import CSV Data File
-    public HashMap<String,String> importCSV(){
-        pickFile();
-        CsvDataHandler csv = new CsvDataHandler(file);
-        if(file != null){
-            return csv.getDataLinker();
-            }
-        else{
-                System.err.println("Erro ao importar o arquivo selecionado.");
-            return null;
-            }
-    }
 
     public FileChooser getFileChooser() {
         return fileChooser;

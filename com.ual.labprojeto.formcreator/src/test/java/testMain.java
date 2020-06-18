@@ -13,22 +13,22 @@ import java.util.List;
 
 public class testMain {
     public static void main(String[] args) throws IOException {
-//        csv a = new csv();
-//        a.readCSV();
-//        fillFileds();
-//        FDFParser f = new FDFParser("D:\\fichaDoAluno1.fdf");
-//        System.out.println();;
+        csv a = new csv();
+        a.readCSV();
+        //fillFileds();
+        //FDFParser f = new FDFParser("D:\\fichaDoAluno1.fdf");
+        //System.out.println();;
 //        COSDictionary trailer = document.getTrailer();
 //        COSDictionary root = (COSDictionary) trailer.getDictionaryObject(COSName.ROOT);
-        FDFCatalog f = new FDFCatalog();
-        PDDocument pdDocument;
-        pdDocument = PDDocument.load(new File("D:\\fichaDoAluno.pdf"));
-        FDFDocument fdf = FDFDocument.load("D:\\fichaDoAluno.fdf");
-        COSDocument doc = fdf.getDocument();
-        FDFCatalog cat = fdf.getCatalog();
-        PDAcroForm p = pdDocument.getDocumentCatalog().getAcroForm();
-        p.exportFDF().save("D:\\fichaDoAluno_s.fdf");
-//        p.importFDF();
+//        FDFCatalog f = new FDFCatalog();
+//        PDDocument pdDocument;
+//        pdDocument = PDDocument.load(new File("D:\\fichaDoAluno.pdf"));
+//        FDFDocument fdf = FDFDocument.load("D:\\fichaDoAluno.fdf");
+//        COSDocument doc = fdf.getDocument();
+//        FDFCatalog cat = fdf.getCatalog();
+//        PDAcroForm p = pdDocument.getDocumentCatalog().getAcroForm();
+//        p.exportFDF().save("D:\\fichaDoAluno_s.fdf");
+////        p.importFDF();
 
     }
     public static void fillFileds(){

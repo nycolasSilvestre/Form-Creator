@@ -16,12 +16,13 @@ public class csv {
             for (String s:csvHeader) {
                 System.out.print(s+" ");
             }
-//            while ((line=br.readLine())!=null){
-//                String[] test = line.split(",");
-//                for (String s: test) {
-//                    System.out.println(s);
-//                }
-//            }
+            System.out.println();
+            while ((line=br.readLine())!=null){
+                String[] test = line.split(",");
+                for (String s: test) {
+                    System.out.println(s);
+                }
+            }
         }
         catch (IOException e){
             e.printStackTrace();
