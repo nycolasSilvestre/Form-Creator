@@ -1,11 +1,14 @@
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -13,25 +16,23 @@ public class test {
     public static void main(String[] args) throws IOException {
         String line;
         String[] csvHeader=null;
-        String filePath = "D:\\data.csv";
+        String filePath = "D:\\data-new.csv";
         Path path = Paths.get(filePath);
-        ctc();
-//        try{
-//            BufferedReader br = new BufferedReader(new FileReader(filePath));
-//            if((line=br.readLine())!=null){
-//                csvHeader = line.split(",");
-//            }
-//            System.out.println();
-//            while ((line=br.readLine())!=null){
-//                String[] test = line.split(",");
-//                for (String s: test) {
-//                    System.out.println(s);
-//                }
-//            }
-//        }
-//        catch (IOException e){
-//            e.printStackTrace();
-//        }
+//        ctc();
+        try (
+                BufferedWriter writer = Files.newBufferedWriter(path);
+
+                CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.EXCEL
+                    .withHeader("ID", "Name", "Designation", "Company"));
+        ) {
+            csvPrinter.printRecord("1", "Sundar Pichai ♥", "CEO", "Google");
+            csvPrinter.printRecord("2", "Satya Nadella", "CEO", "Microsoft");
+            csvPrinter.printRecord("3", "Tim cook", "CEO", "Apple");
+
+            csvPrinter.printRecord(Arrays.asList("4", "Mark Zuckerberg", "CEO", "Facebook"));
+
+            csvPrinter.flush();
+        }
     }
 
     public static void csvParser(Path filePath) throws IOException {
@@ -56,7 +57,7 @@ public class test {
         Reader in = new FileReader("D:\\data.csv");
         Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
         for (CSVRecord record : records) {
-            System.out.println(record.get(1));
+            System.out.println(record.get(1).trim());
         }
     }
 

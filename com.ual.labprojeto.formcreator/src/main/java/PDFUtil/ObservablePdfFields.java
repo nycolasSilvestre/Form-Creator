@@ -35,7 +35,10 @@ public class ObservablePdfFields {
     }
 
     public String getType() {
-        return type;
+        return this.type;
+    }
+    public boolean isCombo(){
+       return type.contains("ComboBox");
     }
 
     public void setType(String type) {

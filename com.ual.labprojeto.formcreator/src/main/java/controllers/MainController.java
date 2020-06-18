@@ -80,12 +80,6 @@ public class MainController {
         colFieldDefaultValue.setCellValueFactory(new PropertyValueFactory<ObservablePdfFields,String>("defaultValue"));
         rowClickHandler();
     }
-    public void importCSV(){
-        msgBox.warning("Atenção!","AVISO","Ficheiros CSV devem conter um cabeçalho com os nomes dos " +
-                "campos contidos no formulário!");
-        FileImporter fileImporter = new FileImporter(FileType.CSV);
-    }
-
     public void importXFDF() throws IOException {}
     public void importXML() throws IOException {}
 
@@ -96,6 +90,8 @@ public class MainController {
         refreshTable();
     }
     public void importCSV(ActionEvent actionEvent) throws IOException {
+        msgBox.warning("Atenção!","AVISO","Ficheiros CSV devem estar no formato indicado nas" +
+                "intruções de uso.");
         FileImporter fileImporter = new FileImporter(FileType.CSV);
         CsvDataHandler csvDataHandler = new CsvDataHandler(fileImporter.importFile());
         csvDataHandler.importCsvData(pdDocument);
@@ -113,7 +109,7 @@ public class MainController {
             row.setOnMouseClicked(event ->{
                 if(!row.isEmpty() && event.getButton()== MouseButton.PRIMARY && event.getClickCount()==2){
                     ObservablePdfFields temp = row.getItem();
-                    if(temp.getType()=="ComboBox"){
+                    if(temp.isCombo()){
                         try {
                             updateComboBoxFormValue(temp);
                         } catch (IOException e) {
@@ -153,7 +149,7 @@ public class MainController {
     public void exportFDF(){}
     public void exportXFDF(){}
     public void exportJSON(){}
-
+    public void importJSON(){}
     public void savePDF(){
         Window stage  = tabPane.getScene().getWindow();
         FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("PDF files (*.PDF)", "*.pdf");
@@ -170,18 +166,17 @@ public class MainController {
         }
     }
     public void exportCsv(){
+
         Window stage  = tabPane.getScene().getWindow();
-        FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("PDF files (*.PDF)", "*.pdf");
+        FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("CSV files (*.CSV)", "*.csv");
         FileChooser f = new FileChooser();
         f.getExtensionFilters().add(fileFilter);
-        f.setTitle("Salvar Ficheiro");
+        f.setTitle("Exportar CSV");
 
         File save = f.showSaveDialog(stage);
         if (save != null) {
-            try {
-                pdDocument.save(save.getPath());
-            } catch (IOException ex) {
-            }
+            CsvDataHandler csvDataHandler = new CsvDataHandler(save);
+            csvDataHandler.exportCsv(pdDocument);
         }
     }
 }

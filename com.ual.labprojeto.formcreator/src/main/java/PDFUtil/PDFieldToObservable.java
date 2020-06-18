@@ -13,7 +13,7 @@ public class PDFieldToObservable {
             PDChoice chField = (PDChoice) pdField;
             obsField= new ObservablePdfFields(
                     chField.getFullyQualifiedName()
-                    ,chField.getClass().getSimpleName().replace("PD","")
+                    ,chField.getClass().getSimpleName().replace(" ","")
                     ,chField.getAlternateFieldName()
                     ,chField.getValueAsString()
                     ,chField.getDefaultValue().toString()
