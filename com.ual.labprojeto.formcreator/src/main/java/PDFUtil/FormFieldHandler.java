@@ -5,6 +5,7 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDComboBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 public class FormFieldHandler {
     public FormFieldHandler() {}
@@ -21,6 +22,15 @@ public class FormFieldHandler {
         PDComboBox field = (PDComboBox)document.getDocumentCatalog().getAcroForm().getField(fieldName);
         if (!value.isEmpty())
             field.setValue(value);
+    }
+    public void clearAllFields(PDDocument document) throws IOException{
+        Iterator<PDField> fields = document.getDocumentCatalog().getAcroForm().getFieldIterator();
+        while (fields.hasNext()){
+            PDField field = fields.next();
+            if(field.getFieldType()=="Tx") {
+                field.setValue("");
+            }
+        }
     }
 
 }

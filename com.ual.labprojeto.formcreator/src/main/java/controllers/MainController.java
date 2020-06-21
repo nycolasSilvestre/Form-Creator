@@ -13,8 +13,6 @@ import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.fdf.FDFDocument;
 import PDFUtil.*;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
-import org.apache.pdfbox.pdmodel.interactive.form.PDComboBox;
-import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import org.apache.pdfbox.tools.ImportXFDF;
 import util.FileImporter;
 
@@ -37,17 +35,13 @@ public class MainController {
 
     @FXML
     TextField txtFilePath;
-
-//    @FXML
-//    Button btnSaveAsPDF,btnExportFDF,btnExportXFDF,btnExportCSV,btnExportJSON;
-
     @FXML
     TableView<ObservablePdfFields> tbForms;
     @FXML
     TableColumn<ObservablePdfFields, String> colFieldName,colFieldType,colFieldDesc,colFieldOptions,colFieldValue,
             colFieldDefaultValue;
     @FXML
-    Label txtDataFilePath;
+    MenuButton menuExport,menuImport;
 
     private PDDocument pdDocument;
     private MessageBox msgBox = new MessageBox();
@@ -72,6 +66,8 @@ public class MainController {
         if(fileImporter.getImportedFilePath()!="" && fileImporter.getImportedFilePath() != null) {
             txtFilePath.setText(fileImporter.getImportedFilePath());
             refreshTable();
+            menuExport.setDisable(false);
+            menuImport.setDisable(false);
         }
     }
 
@@ -85,9 +81,7 @@ public class MainController {
         rowClickHandler();
     }
 
-    public void importXML() throws IOException {}
     public void importXFDF() throws IOException {
-        ImportXFDF importXFDF = new ImportXFDF();
         FileImporter fileImporter = new FileImporter(FileType.XFDF);
         PDDocumentCatalog docCatalog = pdDocument.getDocumentCatalog();
         PDAcroForm acroForm = docCatalog.getAcroForm();
@@ -110,7 +104,10 @@ public class MainController {
         csvDataHandler.importCsvData(pdDocument);
         refreshTable();
     }
-
+    public void clearFields() throws IOException {
+        formFieldHandler.clearAllFields(pdDocument);
+        refreshTable();
+    }
     public void refreshTable(){
         if (pdDocument != null && fieldCollector.getFields(pdDocument) !=null) {
             tbForms.setItems((fieldCollector.getFields(pdDocument)));
@@ -161,9 +158,7 @@ public class MainController {
         refreshTable();
 
     }
-    public void exportXFDF(){}
-    public void exportJSON(){}
-    public void importJSON(){}
+
     public void savePDF(){
         Window stage  = tabPane.getScene().getWindow();
         FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("PDF files (*.PDF)", "*.pdf");
@@ -180,7 +175,6 @@ public class MainController {
         }
     }
     public void exportCsv(){
-
         Window stage  = tabPane.getScene().getWindow();
         FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("CSV files (*.CSV)", "*.csv");
         FileChooser f = new FileChooser();
@@ -194,7 +188,6 @@ public class MainController {
         }
     }
     public void exportFDF() throws IOException {
-
         Window stage  = tabPane.getScene().getWindow();
         FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("FDF files (*.FDF)", "*.fdf");
         FileChooser f = new FileChooser();
@@ -204,6 +197,17 @@ public class MainController {
         File save = f.showSaveDialog(stage);
         if (save != null) {
             pdDocument.getDocumentCatalog().getAcroForm().exportFDF().save(save);
+        }
+    }
+    public void exportXFDF() throws IOException {
+        Window stage  = tabPane.getScene().getWindow();
+        FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("FDF files (*.XFDF)", "*.xfdf");
+        FileChooser f = new FileChooser();
+        f.getExtensionFilters().add(fileFilter);
+        f.setTitle("Exportar XFDF");
+        File save = f.showSaveDialog(stage);
+        if (save != null) {
+            pdDocument.getDocumentCatalog().getAcroForm().exportFDF().saveXFDF(save);
         }
     }
     public void checkIfIsClosed() throws IOException {

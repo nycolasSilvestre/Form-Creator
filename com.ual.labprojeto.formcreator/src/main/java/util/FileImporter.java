@@ -49,10 +49,7 @@ public class FileImporter {
         if(fileFilter != null)
             fileChooser.getExtensionFilters().add(fileFilter);
         tempFile = fileChooser.showOpenDialog(new Stage());
-        if(tempFile == null){
-            System.out.println("Null file");
-        }
-        else{
+        if(tempFile != null){
             file = tempFile;
             importedFilePath= file.getPath();
         }

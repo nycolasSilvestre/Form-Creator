@@ -5,10 +5,12 @@ import org.apache.pdfbox.pdfparser.FDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.fdf.FDFCatalog;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class testMain {
@@ -21,12 +23,16 @@ public class testMain {
 //        COSDictionary trailer = document.getTrailer();
 //        COSDictionary root = (COSDictionary) trailer.getDictionaryObject(COSName.ROOT);
 //        FDFCatalog f = new FDFCatalog();
-//        PDDocument pdDocument;
-//        pdDocument = PDDocument.load(new File("D:\\fichaDoAluno.pdf"));
-//        FDFDocument fdf = FDFDocument.load("D:\\fichaDoAluno.fdf");
-//        COSDocument doc = fdf.getDocument();
-//        FDFCatalog cat = fdf.getCatalog();
-//        PDAcroForm p = pdDocument.getDocumentCatalog().getAcroForm();
+        PDDocument pdDocument;
+        pdDocument = PDDocument.load(new File("D:\\fichaDoAluno.pdf"));
+        FDFDocument fdf = FDFDocument.load("D:\\fichaDoAluno.fdf");
+        COSDocument doc = fdf.getDocument();
+        FDFCatalog cat = fdf.getCatalog();
+        PDAcroForm p = pdDocument.getDocumentCatalog().getAcroForm();
+        Iterator<PDField> fields = p.getFieldIterator();
+        while (fields.hasNext()){
+            System.out.println(fields.next().getFieldType());
+        }
 //        p.exportFDF().save("D:\\fichaDoAluno_s.fdf");
 ////        p.importFDF();
 

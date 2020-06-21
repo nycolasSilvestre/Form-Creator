@@ -30,10 +30,4 @@ public class PDFieldToObservable {
         return obsField;
     }
 
-//    public String converName(String originalName){
-       // String newName=null;
-//        switch (originalName){
-//            case "tx":
-//        }
-//    }
 }
