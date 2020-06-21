@@ -9,10 +9,13 @@ import javafx.scene.input.MouseButton;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.fdf.FDFDocument;
 import PDFUtil.*;
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDComboBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+import org.apache.pdfbox.tools.ImportXFDF;
 import util.FileImporter;
 
 import java.io.File;
@@ -62,8 +65,9 @@ public class MainController {
         //Implementar download de ficheiro
         System.out.println("Importing URL file...");
     }
-    public void importLocalPDFFile(){
+    public void importLocalPDFFile() throws IOException {
         FileImporter fileImporter = new FileImporter(FileType.PDF);
+        checkIfIsClosed();
         pdDocument = fileImporter.importPDFFile();
         if(fileImporter.getImportedFilePath()!="" && fileImporter.getImportedFilePath() != null) {
             txtFilePath.setText(fileImporter.getImportedFilePath());
@@ -80,9 +84,18 @@ public class MainController {
         colFieldDefaultValue.setCellValueFactory(new PropertyValueFactory<ObservablePdfFields,String>("defaultValue"));
         rowClickHandler();
     }
-    public void importXFDF() throws IOException {}
-    public void importXML() throws IOException {}
 
+    public void importXML() throws IOException {}
+    public void importXFDF() throws IOException {
+        ImportXFDF importXFDF = new ImportXFDF();
+        FileImporter fileImporter = new FileImporter(FileType.XFDF);
+        PDDocumentCatalog docCatalog = pdDocument.getDocumentCatalog();
+        PDAcroForm acroForm = docCatalog.getAcroForm();
+        acroForm.setCacheFields(true);
+        FDFDocument fdfDocument = FDFDocument.loadXFDF(fileImporter.importFile());
+        acroForm.importFDF(fdfDocument);
+        refreshTable();
+    }
     public void importFDF(ActionEvent actionEvent) throws IOException {
         FileImporter fileImporter = new FileImporter(FileType.FDF);
         pdDocument.getDocumentCatalog().getAcroForm()
@@ -132,7 +145,8 @@ public class MainController {
         dialog.setHeaderText("Editar valor do campo "+field.getName());
         dialog.setContentText("Por favor, inserir novo valor:");
         Optional<String> result = dialog.showAndWait();
-        formFieldHandler.updateTextField(pdDocument,field.getName(),result.get());
+        if(!result.isEmpty())
+            formFieldHandler.updateTextField(pdDocument,field.getName(),result.get());
         refreshTable();
     }
     public void updateComboBoxFormValue(ObservablePdfFields field) throws IOException {
@@ -142,11 +156,11 @@ public class MainController {
         dialog.setHeaderText("Editar valor do campo "+field.getName());
         dialog.setContentText("Por favor, escolher novo valor:");
         Optional<String> result = dialog.showAndWait();
-        formFieldHandler.updateComboBoxField(pdDocument,field.getName(),result.get());
+        if(!result.isEmpty())
+            formFieldHandler.updateComboBoxField(pdDocument,field.getName(),result.get());
         refreshTable();
 
     }
-    public void exportFDF(){}
     public void exportXFDF(){}
     public void exportJSON(){}
     public void importJSON(){}
@@ -178,5 +192,22 @@ public class MainController {
             CsvDataHandler csvDataHandler = new CsvDataHandler(save);
             csvDataHandler.exportCsv(pdDocument);
         }
+    }
+    public void exportFDF() throws IOException {
+
+        Window stage  = tabPane.getScene().getWindow();
+        FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("FDF files (*.FDF)", "*.fdf");
+        FileChooser f = new FileChooser();
+        f.getExtensionFilters().add(fileFilter);
+        f.setTitle("Exportar FDF");
+
+        File save = f.showSaveDialog(stage);
+        if (save != null) {
+            pdDocument.getDocumentCatalog().getAcroForm().exportFDF().save(save);
+        }
+    }
+    public void checkIfIsClosed() throws IOException {
+        if(pdDocument != null)
+            pdDocument.close();
     }
 }
