@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="FormCreator.jnlp">
+  <information>
+    <title>FormCreator</title>
+    <vendor>Unknown</vendor>
+    <description>FormCreator</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="FormCreator.jar" size="21898" download="eager" />
+    <jar href="commons-csv-1.8.jar" size="49086" download="eager" />
+    <jar href="commons-logging-1.2.jar" size="61829" download="eager" />
+    <jar href="fontbox-2.0.19.jar" size="1561265" download="eager" />
+    <jar href="javafx-base-14.0.1-win.jar" size="751229" download="eager" />
+    <jar href="javafx-base-14.0.1.jar" size="302" download="eager" />
+    <jar href="javafx-controls-14.0.1-win.jar" size="2530489" download="eager" />
+    <jar href="javafx-controls-14.0.1.jar" size="306" download="eager" />
+    <jar href="javafx-fxml-14.0.1-win.jar" size="126766" download="eager" />
+    <jar href="javafx-fxml-14.0.1.jar" size="302" download="eager" />
+    <jar href="javafx-graphics-14.0.1-win.jar" size="6026636" download="eager" />
+    <jar href="javafx-graphics-14.0.1.jar" size="306" download="eager" />
+    <jar href="pdfbox-2.0.19.jar" size="2715618" download="eager" />
+    <jar href="pdfbox-debugger-2.0.19.jar" size="257911" download="eager" />
+    <jar href="pdfbox-tools-2.0.19.jar" size="81206" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="600" height="400" main-class="Main"  name="FormCreator" />
+  <update check="background"/>
+</jnlp>

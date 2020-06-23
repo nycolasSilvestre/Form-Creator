@@ -1,9 +1,14 @@
-C:\Users\Nycolas Silvestre\Desktop\com.ual.labprojeto.formcreator\src\main\java\Teste.java
-C:\Users\Nycolas Silvestre\Desktop\com.ual.labprojeto.formcreator\src\main\java\pdfaux\FileImporter.java
-C:\Users\Nycolas Silvestre\Desktop\com.ual.labprojeto.formcreator\src\main\java\pdfaux\FieldCollector.java
-C:\Users\Nycolas Silvestre\Desktop\com.ual.labprojeto.formcreator\src\main\java\pdfaux\FileType.java
-C:\Users\Nycolas Silvestre\Desktop\com.ual.labprojeto.formcreator\src\main\java\controllers\MainController.java
-C:\Users\Nycolas Silvestre\Desktop\com.ual.labprojeto.formcreator\src\main\java\pdfaux\MessageBox.java
-C:\Users\Nycolas Silvestre\Desktop\com.ual.labprojeto.formcreator\src\main\java\Main.java
-C:\Users\Nycolas Silvestre\Desktop\com.ual.labprojeto.formcreator\src\main\java\pdfaux\ObservablePdfFields.java
-C:\Users\Nycolas Silvestre\Desktop\com.ual.labprojeto.formcreator\src\main\java\pdfaux\PDFieldToObservable.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\controllers\MainController.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\PDFUtil\MessageBox.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\datafileshandler\FDFDataHandler.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\PDFUtil\FieldCollector.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\PDFUtil\PDFieldToObservable.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\PDFUtil\FormFieldHandler.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\util\FileImporter.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\datafileshandler\XMLDataHandler.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\datafileshandler\XFDFDataHandler.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\PDFUtil\FileType.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\datafileshandler\CsvDataHandler.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\datafileshandler\FPDFDataHandler.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\PDFUtil\ObservablePdfFields.java
+C:\Users\Nycolas Silvestre\Documents\Aulas UAL\Lab Proj\FormCreator\com.ual.labprojeto.formcreator\src\main\java\Main.java

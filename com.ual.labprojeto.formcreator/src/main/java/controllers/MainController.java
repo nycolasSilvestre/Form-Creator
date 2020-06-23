@@ -97,7 +97,7 @@ public class MainController {
         refreshTable();
     }
     public void importCSV(ActionEvent actionEvent) throws IOException {
-        msgBox.warning("Atenção!","AVISO","Ficheiros CSV devem estar no formato indicado nas" +
+        msgBox.warning("Atenção!","AVISO","Ficheiros CSV devem estar no formato indicado nas " +
                 "intruções de uso.");
         FileImporter fileImporter = new FileImporter(FileType.CSV);
         CsvDataHandler csvDataHandler = new CsvDataHandler(fileImporter.importFile());
@@ -142,8 +142,8 @@ public class MainController {
         dialog.setHeaderText("Editar valor do campo "+field.getName());
         dialog.setContentText("Por favor, inserir novo valor:");
         Optional<String> result = dialog.showAndWait();
-        if(!result.isEmpty())
-            formFieldHandler.updateTextField(pdDocument,field.getName(),result.get());
+        //if(!result.isEmpty())
+        formFieldHandler.updateTextField(pdDocument,field.getName(),result.get());
         refreshTable();
     }
     public void updateComboBoxFormValue(ObservablePdfFields field) throws IOException {
@@ -153,8 +153,8 @@ public class MainController {
         dialog.setHeaderText("Editar valor do campo "+field.getName());
         dialog.setContentText("Por favor, escolher novo valor:");
         Optional<String> result = dialog.showAndWait();
-        if(!result.isEmpty())
-            formFieldHandler.updateComboBoxField(pdDocument,field.getName(),result.get());
+        //if(!result.isEmpty())
+        formFieldHandler.updateComboBoxField(pdDocument,field.getName(),result.get());
         refreshTable();
 
     }

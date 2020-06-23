@@ -1,0 +1,15 @@
+PDFUtil\PDFieldToObservable.class
+datafileshandler\FPDFDataHandler.class
+PDFUtil\FileType.class
+Main.class
+PDFUtil\ObservablePdfFields.class
+PDFUtil\FieldCollector.class
+PDFUtil\FormFieldHandler.class
+PDFUtil\MessageBox.class
+datafileshandler\CsvDataHandler.class
+datafileshandler\XMLDataHandler.class
+controllers\MainController.class
+datafileshandler\XFDFDataHandler.class
+datafileshandler\FDFDataHandler.class
+util\FileImporter.class
+util\FileImporter$1.class

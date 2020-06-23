@@ -9,8 +9,8 @@
         <module name="com.ual.labprojeto.formcreator" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="com.ual.labprojeto.formcreator" target="11" />
+    <bytecodeTargetLevel target="8">
+      <module name="com.ual.labprojeto.formcreator" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

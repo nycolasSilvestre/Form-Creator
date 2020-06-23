@@ -49,7 +49,7 @@
                         </HBox>
                         <HBox alignment="CENTER_RIGHT" prefHeight="92.0" prefWidth="829.0">
                            <children>
-                              <Button fx:id="btnClearFields" mnemonicParsing="false" onAction="#clearFields" prefHeight="26.0" prefWidth="101.0" text="Limpar Campos" />
+                              <Button fx:id="btnClearFields" mnemonicParsing="false" onAction="#clearFields" prefHeight="26.0" prefWidth="150.0" text="Limpar Campos" />
                            </children>
                            <padding>
                               <Insets right="15.0" />
