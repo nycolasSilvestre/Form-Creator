@@ -1,0 +1,13 @@
+rever envio de email - adaptar classe SendEmailTLS (devera haver 3 opções principais (gmail, outlook e yahoo) e opção de configurar 
+funcao enviar email deve pedir remetente ou lista, nome do arquivo
+rever csv - criar nova funcao para importar em bath -> usar functions getHeaderMapping e importCsvData dos testes, colocar para funcionar junto com FormFieldHandler (updateTextField)
+voltar valor original - criar pasta hide temp que armazene o fdf original quando abrir o file. a funcao reset faz o import desse ficheiro. após fechar, o mesmo é deletado.
+funcão de deletar fdfs da past hide
+
+
+
+
+
+Correções:
+Não preencher file path se estiver com erro 
+*.jar

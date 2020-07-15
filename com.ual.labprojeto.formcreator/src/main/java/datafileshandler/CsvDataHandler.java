@@ -33,37 +33,90 @@ public class CsvDataHandler {
         super();
     }
 
-    public void importCsvData(PDDocument document) throws IOException {
-        CSVParser csvParser = CSVParser.parse(csvPath, Charset.defaultCharset(), CSVFormat.DEFAULT.withHeader("Nome Campo",
-                "Valor"));
+    public String[] getHeaderMapping(Iterator<PDField> fields){
+        String[]header=null;
+        String  s="";
+        while (fields.hasNext()){
+            PDField field = fields.next();
+            s+=(field.getFullyQualifiedName()+",");
+        }
+        header = s.split(",");
+        return header;
+    }
+    public void importCsvData(PDDocument pdDocument) throws IOException {
+        Iterator<PDField> fields = pdDocument.getDocumentCatalog().getAcroForm().getFieldIterator();
+        String[] header =getHeaderMapping(fields);
+        CSVParser csvParser = CSVParser.parse(csvPath, Charset.defaultCharset(),
+                CSVFormat.DEFAULT.withHeader(header));
         Stream<CSVRecord> csvRecordStream = StreamSupport.stream(csvParser.spliterator(),false);
         csvRecordStream
                 .skip(1)
                 .forEach(record -> {
-                    try {
-                        formFieldHandler.updateTextField(document,record.get(0),record.get(1).trim());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    for (String s: header) {
+                        try {
+                             formFieldHandler.updateTextField(pdDocument,s,record.get(s).trim());
+
+                        } catch (IOException e) {e.printStackTrace();}
+                        System.out.print(s+" : "+record.get(s));
                     }
                 });
     }
-    public void exportCsv(PDDocument pdDocument){
-        Iterator<PDField> temp = pdDocument.getDocumentCatalog().getAcroForm().getFieldIterator();
+    public void exportCsv(PDDocument document) throws IOException {
+        String[] header =getHeaderMapping(document.getDocumentCatalog().getAcroForm().getFieldIterator());
         try {
             BufferedWriter writer = Files.newBufferedWriter(csvPath);
 
             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.EXCEL
-                    .withHeader("Nome Campo","Valor"));
-            while (temp.hasNext()){
-                PDField field = temp.next();
-                csvPrinter.printRecord(field.getFullyQualifiedName(),field.getValueAsString());
-            }
+                    .withHeader(header));
+
+            csvPrinter.printRecord(getFieldRecords(document));
             csvPrinter.flush();
         }
         catch (Exception exception){
             exception.printStackTrace();
         }
-
     }
+
+    public static String[] getFieldRecords(PDDocument pdDocument){
+        Iterator<PDField> fields = pdDocument.getDocumentCatalog().getAcroForm().getFieldIterator();
+        String  s="";
+        while (fields.hasNext()){
+            PDField field = fields.next();
+            s+=(field.getValueAsString()+",");
+        }
+        return s.split(",");
+    }
+//    public void importCsvData(PDDocument document) throws IOException {
+//        CSVParser csvParser = CSVParser.parse(csvPath, Charset.defaultCharset(), CSVFormat.DEFAULT.withHeader("Nome Campo",
+//                "Valor"));
+//        Stream<CSVRecord> csvRecordStream = StreamSupport.stream(csvParser.spliterator(),false);
+//        csvRecordStream
+//                .skip(1)
+//                .forEach(record -> {
+//                    try {
+//                        formFieldHandler.updateTextField(document,record.get(0),record.get(1).trim());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                });
+//    }
+//    public void exportCsv(PDDocument pdDocument){
+//        Iterator<PDField> temp = pdDocument.getDocumentCatalog().getAcroForm().getFieldIterator();
+//        try {
+//            BufferedWriter writer = Files.newBufferedWriter(csvPath);
+//
+//            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.EXCEL
+//                    .withHeader("Nome Campo","Valor"));
+//            while (temp.hasNext()){
+//                PDField field = temp.next();
+//                csvPrinter.printRecord(field.getFullyQualifiedName(),field.getValueAsString());
+//            }
+//            csvPrinter.flush();
+//        }
+//        catch (Exception exception){
+//            exception.printStackTrace();
+//        }
+//
+//    }
 
 }

@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -15,21 +16,25 @@ import java.util.stream.StreamSupport;
 public class test {
     public static void main(String[] args) throws IOException {
         String line;
-        String[] csvHeader=null;
-        String filePath = "D:\\data-new.csv";
+        String[] csvHeader={"Name", "Designation", "Company"};
+//        ArrayList<String> csvHeader = new ArrayList<>();
+//        csvHeader.add("Name");
+//        csvHeader.add("Designation");
+//        csvHeader.add("Company");
+        String filePath = "D:\\datasss-new.csv";
         Path path = Paths.get(filePath);
 //        ctc();
         try (
                 BufferedWriter writer = Files.newBufferedWriter(path);
 
                 CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.EXCEL
-                    .withHeader("ID", "Name", "Designation", "Company"));
+                    .withHeader(csvHeader));
         ) {
-            csvPrinter.printRecord("1", "Sundar Pichai ♥", "CEO", "Google");
-            csvPrinter.printRecord("2", "Satya Nadella", "CEO", "Microsoft");
-            csvPrinter.printRecord("3", "Tim cook", "CEO", "Apple");
+            csvPrinter.printRecord("Sundar dedededed ♥", "CEO", "Google");
+            csvPrinter.printRecord("Satya Nadddededeella", "CEOeeee", "Microsoft");
+            csvPrinter.printRecord("Timeedededededd cook", "CEdddO", "Apple");
 
-            csvPrinter.printRecord(Arrays.asList("4", "Mark Zuckerberg", "CEO", "Facebook"));
+            csvPrinter.printRecord(Arrays.asList("Mark Zuckerberg", "CEO", "Facebook"));
 
             csvPrinter.flush();
         }

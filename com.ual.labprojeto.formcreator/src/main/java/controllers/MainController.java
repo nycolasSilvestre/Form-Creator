@@ -55,10 +55,7 @@ public class MainController {
     }
 
     //Import File tab controls
-    public void importUrlFile(){
-        //Implementar download de ficheiro
-        System.out.println("Importing URL file...");
-    }
+
     public void importLocalPDFFile() throws IOException {
         FileImporter fileImporter = new FileImporter(FileType.PDF);
         checkIfIsClosed();
@@ -174,7 +171,7 @@ public class MainController {
             }
         }
     }
-    public void exportCsv(){
+    public void exportCsv() throws IOException {
         Window stage  = tabPane.getScene().getWindow();
         FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("CSV files (*.CSV)", "*.csv");
         FileChooser f = new FileChooser();
