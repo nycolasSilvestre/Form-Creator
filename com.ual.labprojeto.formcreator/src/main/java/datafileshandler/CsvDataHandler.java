@@ -17,8 +17,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -43,21 +43,31 @@ public class CsvDataHandler {
         header = s.split(",");
         return header;
     }
-    public void importCsvData(PDDocument pdDocument) throws IOException {
+    public void importCsvData(PDDocument pdDocument, String fileDirectory,  String filePrefix) throws IOException {
         Iterator<PDField> fields = pdDocument.getDocumentCatalog().getAcroForm().getFieldIterator();
         String[] header =getHeaderMapping(fields);
         CSVParser csvParser = CSVParser.parse(csvPath, Charset.defaultCharset(),
                 CSVFormat.DEFAULT.withHeader(header));
         Stream<CSVRecord> csvRecordStream = StreamSupport.stream(csvParser.spliterator(),false);
+        AtomicInteger counter = new AtomicInteger();
         csvRecordStream
                 .skip(1)
                 .forEach(record -> {
                     for (String s: header) {
                         try {
                              formFieldHandler.updateTextField(pdDocument,s,record.get(s).trim());
-
                         } catch (IOException e) {e.printStackTrace();}
-                        System.out.print(s+" : "+record.get(s));
+                    }
+                    try {
+                        counter.getAndIncrement();
+                        Path fileDir = Paths.get(fileDirectory,filePrefix+"_"+counter+".pdf");
+                        File f = new File(fileDir.toString());
+                        while(f.exists() && ! f.isDirectory()){
+
+                        }
+                        pdDocument.save(fileDir.toString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 });
     }
@@ -68,7 +78,6 @@ public class CsvDataHandler {
 
             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.EXCEL
                     .withHeader(header));
-
             csvPrinter.printRecord(getFieldRecords(document));
             csvPrinter.flush();
         }

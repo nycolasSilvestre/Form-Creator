@@ -21,4 +21,12 @@ public class MessageBox{
         msgBox.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         msgBox.showAndWait();
     }
+    public void success(String title,String header, String context){
+        msgBox = new Alert(Alert.AlertType.CONFIRMATION);
+        msgBox.setTitle(title);
+        msgBox.setHeaderText(header);
+        msgBox.setContentText(context);
+        msgBox.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        msgBox.showAndWait();
+    }
 }

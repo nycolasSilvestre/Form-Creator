@@ -8,7 +8,8 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="com_ual_labprojeto_formcreator.jar" size="21986" download="eager" />
+    <jar href="activation-1.1.jar" size="62983" download="eager" />
+    <jar href="com_ual_labprojeto_formcreator.jar" size="28841" download="eager" />
     <jar href="commons-csv-1.8.jar" size="49086" download="eager" />
     <jar href="commons-logging-1.2.jar" size="61829" download="eager" />
     <jar href="fontbox-2.0.19.jar" size="1561265" download="eager" />
@@ -20,10 +21,11 @@
     <jar href="javafx-fxml-14.0.1.jar" size="302" download="eager" />
     <jar href="javafx-graphics-14.0.1-win.jar" size="6026636" download="eager" />
     <jar href="javafx-graphics-14.0.1.jar" size="306" download="eager" />
+    <jar href="javax.mail-1.6.0.jar" size="653275" download="eager" />
     <jar href="pdfbox-2.0.19.jar" size="2715618" download="eager" />
     <jar href="pdfbox-debugger-2.0.19.jar" size="257911" download="eager" />
     <jar href="pdfbox-tools-2.0.19.jar" size="81206" download="eager" />
   </resources>
-  <jfx:javafx-desc  width="650" height="850" main-class="Main"  name="com.ual.labprojeto.formcreator" />
+  <jfx:javafx-desc  width="600" height="400" main-class="Main"  name="com.ual.labprojeto.formcreator" />
   <update check="background"/>
 </jnlp>
